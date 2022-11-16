@@ -1,0 +1,53 @@
+import remover_numeros_duplicados as classes
+
+"""Devemos retirar algumas interações com o usuário da classe e colocar 
+aqui na interface"""
+
+"""Essa função serve para abrir o documento de texto, 
+serve para reciclar caso eu vá usar para mais de uma atividade
+no programa"""
+
+
+def ler_documentos_de_texto():
+
+    entrada = input("nome do arquivo de texto que contem a lista de contatos: ").strip()
+    arquivo = open(f"listas/{entrada}.txt", "r")
+    texto = str(arquivo.read())
+    arquivo.close()
+
+    listas = classes.ListaContatos(entrada, texto)
+    return listas
+
+
+"""essa função serve para criar um arquivo de texto com os números sem cópia
+ de números e formatados"""
+
+
+def criar_documento_texto(listas):
+    entrada = input("Se desejar substituir o arquivo é só apertar ENTER."
+                    "\nNomeie o novo arquivo:")
+
+    if entrada == "":
+        entrada = listas.get_nome_do_arquivo
+
+    numeral_do_arquivo = 1
+    for lista in listas.get_texto_final:
+        arquivo = open(f"listas/{entrada} ({numeral_do_arquivo}).txt", "w")
+        arquivo.write(lista)
+        print(str(arquivo))
+        arquivo.close()
+        numeral_do_arquivo = numeral_do_arquivo + 1
+
+
+def corrigir_documento_texto():
+
+    while True:
+        conjunto_listas_contatos = ler_documentos_de_texto()
+
+        conjunto_listas_contatos.corrigir_lista_telefone()
+
+        criar_documento_texto(conjunto_listas_contatos)
+
+        if input("Deseja encerrar o programa "
+                 "(S/N)?").strip().lower() == "s":
+            break
